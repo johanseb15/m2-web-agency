@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import HeroSection from "@/components/HeroSection";
 import ProjectCalculator from "@/components/ProjectCalculator";
 import CallToAction from "@/components/CallToAction";
@@ -11,5 +12,14 @@ export default function Hero() {
         <CallToAction />
       </div>
     </div>
+=======
+import Hero from @/components/Hero';
+
+export default function Home() {
+  return (
+    <main>
+      <Hero />
+    </main>
+>>>>>>> b97dc48 (Integracion calculadora pagina web)
   );
 }

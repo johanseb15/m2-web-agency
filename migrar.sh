@@ -5,12 +5,6 @@ echo "🚀 Iniciando migración de archivos desde CalculadoraProyectos..."
 # Crear carpetas destino si no existen
 mkdir -p src/components src/hooks src/data public/assets
 
-# Validar que existe el directorio fuente
-if [ ! -d "CalculadoraProyectos" ]; then
-  echo "❌ Error: Directorio CalculadoraProyectos no encontrado"
-  exit 1
-fi
-
 # Función para mover archivo si existe
 mover_si_existe() {
   origen="$1"
@@ -38,15 +32,12 @@ mover_si_existe CalculadoraProyectos/src/hooks/useLead.ts src/hooks/
 
 # --- DATOS ESTÁTICOS ---
 echo -e "\n📁 Datos estáticos:"
-if [ -d "CalculadoraProyectos/public/assets" ] && [ "$(ls -A CalculadoraProyectos/public/assets)" ]; then
-  cp -r CalculadoraProyectos/public/assets/* public/assets/ 2>/dev/null && \
-  rm -rf CalculadoraProyectos/public/assets/* && \
-  echo "✅ Assets movidos a public/assets/"
-elif [ -d "CalculadoraProyectos/public/assets" ]; then
-  echo "⚠️  Carpeta assets está vacía"
-else
-  echo "⚠️  Carpeta assets no encontrada"
-fi
+mover_si_existe CalculadoraProyectos/src/data/projectTypes.ts src/data/
+mover_si_existe CalculadoraProyectos/src/data/features.ts src/data/
+mover_si_existe CalculadoraProyectos/src/data/timelines.ts src/data/
+
+# --- ESTILOS / ASSETS ---
+echo -e "\n🎨 Estilos / Assets:"
 if [ -d CalculadoraProyectos/public/assets ]; then
   mv CalculadoraProyectos/public/assets/* public/assets/
   echo "✅ Assets movidos a public/assets/"
@@ -56,8 +47,7 @@ fi
 
 # --- ACTUALIZACIÓN DE IMPORTS ---
 echo -e "\n🔧 Actualizando imports relativos a alias '@/':"
-find src -type f \( -name "*.ts" -o -name "*.tsx" \) -exec sed -i.bak 's|\.\./|@/|g' {} \; && \
-find src -type f -name "*.bak" -delete
+find src -type f \( -name "*.ts" -o -name "*.tsx" \) -exec sed -i 's|\.\./|@/|g' {} \;
 echo "✅ Imports actualizados"
 
 echo -e "\n✅ Migración completa."
