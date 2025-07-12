@@ -17,10 +17,20 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simular envío – acá conectarías con tu backend
-    setSubmitted(true);
+    try {
+      // Add proper validation
+      if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+        throw new Error('All fields are required');
+      }
+      
+      // TODO: Connect with backend API
+      console.log('Form submitted:', formData);
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Form submission error:', error);
+      // Handle error state
+    }
   };
-
   return (
     <section id="contact" className="min-h-screen flex items-center justify-center bg-darkBg px-6 py-20 snap-start">
       <div className="max-w-3xl w-full glass-card rounded-xl p-8">

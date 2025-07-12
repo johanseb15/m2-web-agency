@@ -16,12 +16,12 @@ export default function Hero() {
         Quote your idea, preview your landing, and launch in minutes. M² brings automation, style, and intelligence to your online presence.
       </p>
 
-      <a
-        href="#portfolio"
+      <button
+        onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
         className="bg-neonGreen text-darkBg font-bold py-4 px-10 rounded-full text-lg hover:shadow-neonGreen transition-shadow duration-300"
+        aria-label="Navigate to portfolio section"
       >
         Get Started
-      </a>
-    </section>
+      </button>    </section>
   );
 }

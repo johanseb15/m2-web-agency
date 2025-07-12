@@ -2,7 +2,13 @@
 
 import { motion } from "framer-motion";
 
-const items = [
+interface PortfolioItem {
+  title: string;
+  description: string;
+  color: 'neonGreen' | 'neonBlue' | 'neonPink';
+}
+
+const items: PortfolioItem[] = [
   {
     title: "Landing Page",
     description: "Diseño moderno y optimizado para conversión.",
@@ -38,10 +44,17 @@ export default function Portfolio() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: i * 0.2 }}
             viewport={{ once: true }}
-            className={`glass-card p-6 rounded-xl border border-${item.color}`}
+            className={`glass-card p-6 rounded-xl border ${
+              item.color === 'neonGreen' ? 'border-neonGreen' :
+              item.color === 'neonBlue' ? 'border-neonBlue' :
+              'border-neonPink'
+            }`}
           >
-            <h3 className={`text-2xl font-semibold text-${item.color} mb-2`}>
-              {item.title}
+            <h3 className={`text-2xl font-semibold mb-2 ${
+              item.color === 'neonGreen' ? 'text-neonGreen' :
+              item.color === 'neonBlue' ? 'text-neonBlue' :
+              'text-neonPink'
+            }`}>              {item.title}
             </h3>
             <p className="text-gray-400">{item.description}</p>
           </motion.div>

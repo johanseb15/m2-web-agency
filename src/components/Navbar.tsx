@@ -14,24 +14,30 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("hero");
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPos = window.scrollY;
-      const sectionOffsets = sections.map(({ id }) => {
-        const el = document.getElementById(id);
-        return el ? { id, top: el.offsetTop } : { id, top: 0 };
-      });
+    let ticking = false;
 
-      const current = sectionOffsets.findLast(
-        ({ top }) => scrollPos >= top - window.innerHeight / 3
-      );
-      if (current) setActiveSection(current.id);
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollPos = window.scrollY;
+          const sectionOffsets = sections.map(({ id }) => {
+            const el = document.getElementById(id);
+            return el ? { id, top: el.offsetTop } : { id, top: 0 };
+          });
+
+          const current = sectionOffsets
+            .filter(({ top }) => scrollPos >= top - window.innerHeight / 3)
+            .pop();
+          if (current) setActiveSection(current.id);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
+  }, []);  return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-darkBg bg-opacity-80 backdrop-blur-md border-b border-darkBorder px-6 py-4">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         <Link href="#hero" className="text-neonGreen font-bold text-xl tracking-tight">
