@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { calculatePrice } from "@/lib/calculatePrice";
 import { generateQuotePDF } from "@/lib/pdfGenerator";
@@ -59,9 +59,7 @@ export default function ResultsPage() {
           ${total}
         </motion.p>
 
-        <p className="text-gray-400">
-          Estimación basada en tus opciones de proyecto, diseño y complejidad.
-        </p>
+        <p className="text-gray-400">Estimación basada en tu selección de proyecto y servicios</p>
 
         {/* Gráfico Donut */}
         {priceDetails && (
@@ -96,6 +94,7 @@ export default function ResultsPage() {
           </a>
           <button
             onClick={() =>
+              priceDetails &&
               generateQuotePDF({
                 total,
                 breakdown: priceDetails,
@@ -110,10 +109,11 @@ export default function ResultsPage() {
         {/* Mini lead form */}
         <EmailInput />
 
-        {/* Contador y testimonios */}
+        {/* Contador social */}
         <p className="text-gray-500 mt-6">+1400 cotizaciones generadas este mes 🚀</p>
       </section>
 
+      {/* Testimonios */}
       <section className="mt-20">
         <TestimonialsSection />
       </section>
