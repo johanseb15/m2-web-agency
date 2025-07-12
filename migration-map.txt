@@ -1,0 +1,26 @@
+🔍 Explorando estructura migrada en src/...
+
+📦 Componentes visuales (.tsx):
+src/components/Contact.tsx
+src/components/Hero.tsx
+src/components/Navbar.tsx
+src/components/SloganGenerator.tsx
+src/components/VisualDebug.tsx
+
+🧩 Hooks (.ts):
+src/hooks/useEstimate.ts
+src/hooks/useLead.ts
+src/hooks/useSlogan.ts
+
+📁 Datos estáticos (.ts):
+src/data/features.ts
+src/data/projectTypes.ts
+src/data/timelines.ts
+
+🎨 Estilos (.css):
+src/app/globals.css
+src/styles/animations.css
+src/styles/tailwind.css
+src/styles/variables.css
+
+🖼️ Archivos en public/assets/:
