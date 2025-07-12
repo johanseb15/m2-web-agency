@@ -24,6 +24,11 @@ find src -type f -name "*.css" >> $MAP
 
 # Assets (opcional)
 echo -e "\n🖼️ Archivos en public/assets/:" >> $MAP
-find public/assets -type f >> $MAP
+if [ -d "public/assets" ]; then
+  echo "✔️ Archivos en public/assets detectados" >> "$MAP"
+  find public/assets -type f >> "$MAP"
+else
+  echo "⚠️ No se encontró la carpeta public/assets" >> "$MAP"
+fi
 
 echo "✅ Archivo actualizado: $MAP"

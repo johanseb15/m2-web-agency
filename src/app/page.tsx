@@ -29,7 +29,9 @@ export default function Hero() {
     }
     
     // Complexity multiplier
-    const complexityMultiplier = parseInt(complexity) / 3;
+    // Use an explicit mapping for 0%, 25%, 50%, 75%, 100% complexity increases
+    const complexityMultipliers = { 1: 0, 2: 0.25, 3: 0.5, 4: 0.75, 5: 1.0 };
+    const complexityMultiplier = complexityMultipliers[parseInt(complexity)] || 0.5;
     
     // Timeline multiplier (shorter timeline = higher cost)
     const timelineMultiplier = parseInt(timeline) === 1 ? 1.5 : 
@@ -101,15 +103,21 @@ export default function Hero() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Complexity (1-5)</label>
+                  <label className="block text-sm font-medium mb-2">Complexity</label>
                   <input
                     type="number"
                     min="1"
                     max="5"
                     value={complexity}
                     onChange={(e) => setComplexity(e.target.value)}
+                    onInvalid={(e) => e.target.setCustomValidity('Please enter a value between 1 and 5')}
+                    onInput={(e) => e.target.setCustomValidity('')}
+                    aria-describedby="complexity-help"
                     className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   />
+                  <div id="complexity-help" className="text-xs text-gray-400 mt-1">
+                    1 = Simple, 5 = Very Complex
+                  </div>
                 </div>
                 
                 <div>
@@ -121,6 +129,8 @@ export default function Hero() {
                     value={timeline}
                     onChange={(e) => setTimeline(e.target.value)}
                     className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  />
+                </div>
                   />
                 </div>
               </div>
