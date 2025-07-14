@@ -13,14 +13,21 @@ export default function TestimonialsSection() {
   const [imgError, setImgError] = useState(false);
 
   const nextTestimonial = () => {
-    setIndex((prev) => (prev + 1) % total);
-    setImgLoading(true);
-    setImgError(false);
+    setIndex(prev => {
+      const newIndex = (prev + 1) % total;
+      // Batch related state updates
+      setImgLoading(true);
+      setImgError(false);
+      return newIndex;
+    });
   };
   const prevTestimonial = () => {
-    setIndex((prev) => (prev - 1 + total) % total);
-    setImgLoading(true);
-    setImgError(false);
+    setIndex(prev => {
+      const newIndex = (prev - 1 + total) % total;
+      setImgLoading(true);
+      setImgError(false);
+      return newIndex;
+    });
   };
 
   return (
@@ -51,7 +58,7 @@ export default function TestimonialsSection() {
               )}
               <Image
                 src={imgError ? '/assets/avatar-fallback.png' : testimonials[index].avatar}
-                alt={testimonials[index].name}
+                alt={imgError ? 'Avatar por defecto: imagen de usuario no disponible' : testimonials[index].name}
                 width={48}
                 height={48}
                 className={`w-12 h-12 rounded-full border border-neonBlue object-cover ${imgLoading ? 'opacity-0' : 'opacity-100'}`}

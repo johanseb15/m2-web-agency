@@ -32,7 +32,7 @@ html {
 }
 
 /* For browsers supporting the new scrollbar pseudo-elements */
-* {
+.scrollbar-custom {
   scrollbar-width: thin;
   scrollbar-color: #39FF14 #1C1C1E;
 }
@@ -56,5 +56,5 @@ a:hover {
 /* === Body padding en mobile === */
 body {
   min-height: 100vh;
-  padding-bottom: 2rem;
+  padding-bottom: env(safe-area-inset-bottom, 2rem);
 }

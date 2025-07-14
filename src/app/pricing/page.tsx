@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { projectTypes } from "@/data/projectTypes";
-import { formatCurrency } from "@/utils/formatCurrency";
+import projectTypes from "../../data/projectTypes";
+import { formatCurrency } from "../../utils/formatCurrency";
 
 export default function PricingPage() {
   return (
@@ -23,16 +23,18 @@ export default function PricingPage() {
                 <div className="text-3xl font-bold text-neonGreen mb-4">
                   {formatCurrency(type.baseCost)}
                 </div>
-                <ul className="text-sm space-y-2 mb-6">
+                <ul className="text-sm space-y-2 mb-6" aria-label={`Características incluidas en el paquete ${type.name}`} role="list">
                   {type.features.slice(0, 4).map((feature: string) => (
-                    <li key={feature} className="flex items-center gap-2">
-                      <span className="text-neonGreen">✓</span>
+                    <li key={feature} className="flex items-center gap-2" role="listitem">
+                      <span className="text-neonGreen" aria-hidden="true">✓</span>
+                      <span className="sr-only">Incluye</span>
                       <span className="text-gray-300">{feature}</span>
                     </li>
                   ))}
                   {type.features.length > 4 && (
-                    <li className="flex items-center gap-2 text-gray-400 italic">
-                      <span className="text-neonGreen">…</span>
+                    <li className="flex items-center gap-2 text-gray-400 italic" role="listitem">
+                      <span className="text-neonGreen" aria-hidden="true">…</span>
+                      <span className="sr-only">y más características</span>
                       <span>and more...</span>
                     </li>
                   )}
@@ -40,8 +42,10 @@ export default function PricingPage() {
                 <Link
                   href="/calculator"
                   className="inline-block bg-neonGreen text-black text-sm font-bold px-4 py-2 rounded-md hover:scale-105 transition"
+                  aria-label={`Cotizar este paquete: ${type.name} - ir a la calculadora`}
+                  role="button"
                 >
-                  Cotizar este paquete
+                  Cotizar este paquete – Ir a la calculadora
                 </Link>
               </div>
             ))

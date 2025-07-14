@@ -12,9 +12,18 @@ touch src/app/contact/page.tsx
 rm -f src/components/ProjectCalculator.tsx
 rm -f src/components/CallToAction.tsx
 
-# Move Contact.tsx to ContactForm.tsx if it's just a form
+# Move Contact.tsx to ContactForm.tsx with backup and confirmation
 if [ -f "src/components/Contact.tsx" ]; then
-  mv src/components/Contact.tsx src/components/ContactForm.tsx
+  echo "src/components/Contact.tsx found."
+  cp src/components/Contact.tsx src/components/Contact.tsx.bak
+  echo "Backup created at src/components/Contact.tsx.bak."
+  read -p "¿Deseas mover Contact.tsx a ContactForm.tsx? (s/n): " confirm
+  if [[ $confirm == "s" || $confirm == "S" ]]; then
+    mv src/components/Contact.tsx src/components/ContactForm.tsx
+    echo "Archivo movido."
+  else
+    echo "Operación cancelada. El archivo original y el backup permanecen intactos."
+  fi
 fi
 
 # Create lib with utilities and modular logic

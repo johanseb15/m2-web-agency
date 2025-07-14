@@ -28,8 +28,9 @@ export default function Page() {
       default:
         baseCost = 1000;
     }
-    // Multiplicador de complejidad (1-5, base 3)
-    const complexityMultiplier = complexity / 3;
+    // Multiplicador de complejidad (1-5, base 3 = 1)
+    // complexity 1 → 0, 3 → 1, 5 → 2
+    const complexityMultiplier = (complexity - 3) / 2 + 1;
     // Multiplicador de timeline (1-12, menos semanas = más caro)
     let timelineMultiplier = 1;
     if (timeline <= 2) timelineMultiplier = 1.5;
@@ -107,7 +108,13 @@ export default function Page() {
                     min={1}
                     max={5}
                     value={complexity}
-                    onChange={(e) => setComplexity(Number(e.target.value))}
+                    onChange={(e) => {
+                      const val = Number(e.target.value);
+                      if (isNaN(val)) return;
+                      if (val < 1) setComplexity(1);
+                      else if (val > 5) setComplexity(5);
+                      else setComplexity(val);
+                    }}
                     className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>
@@ -119,7 +126,13 @@ export default function Page() {
                     min={1}
                     max={12}
                     value={timeline}
-                    onChange={(e) => setTimeline(Number(e.target.value))}
+                    onChange={(e) => {
+                      const val = Number(e.target.value);
+                      if (isNaN(val)) return;
+                      if (val < 1) setTimeline(1);
+                      else if (val > 12) setTimeline(12);
+                      else setTimeline(val);
+                    }}
                     className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>

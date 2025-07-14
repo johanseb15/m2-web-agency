@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function AboutPage() {
   return (
     <section className="min-h-screen bg-darkBg text-white px-6 py-12">
@@ -44,15 +46,14 @@ export default function AboutPage() {
         {/* Cierre */}
         <div className="text-center mt-16">
           <p className="text-gray-400 mb-4">
-            M² es más que una agencia. Es una forma nueva de construir ideas digitales.
+...
           </p>
-          <a
+          <Link
             href="/calculator"
-            className="bg-neonGreen text-black font-bold px-6 py-3 rounded-lg hover:scale-105 transition"
+            className="bg-neonGreen text-black font-bold px-6 py-3 rounded-lg hover:scale-105 transition inline-block"
           >
             Empezar mi proyecto
-          </a>
-        </div>
+          </Link>        </div>
       </div>
     </section>
   );
