@@ -28,6 +28,7 @@ export default function Page() {
       default:
         baseCost = 1000;
     }
+<<<<<<< HEAD
     // Multiplicador de complejidad (1-5, base 3 = 1)
     // complexity 1 → 0, 3 → 1, 5 → 2
     const complexityMultiplier = (complexity - 3) / 2 + 1;
@@ -36,6 +37,18 @@ export default function Page() {
     if (timeline <= 2) timelineMultiplier = 1.5;
     else if (timeline <= 4) timelineMultiplier = 1.2;
     // Calcular total
+=======
+    
+    // Complexity multiplier
+    // Use an explicit mapping for 0%, 25%, 50%, 75%, 100% complexity increases
+    const complexityMultipliers = { 1: 0, 2: 0.25, 3: 0.5, 4: 0.75, 5: 1.0 };
+    const complexityMultiplier = complexityMultipliers[parseInt(complexity)] || 0.5;
+    
+    // Timeline multiplier (shorter timeline = higher cost)
+    const timelineMultiplier = parseInt(timeline) === 1 ? 1.5 : 
+                              parseInt(timeline) === 2 ? 1.2 : 1;
+    
+>>>>>>> 7c91d85 (Integracion calculadora con landing page IA)
     const total = Math.round(baseCost * (1 + complexityMultiplier) * timelineMultiplier);
     setEstimatedCost(total);
     setShowResult(true);
@@ -102,12 +115,13 @@ export default function Page() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Complexity (1-5)</label>
+                  <label className="block text-sm font-medium mb-2">Complexity</label>
                   <input
                     type="number"
                     min={1}
                     max={5}
                     value={complexity}
+<<<<<<< HEAD
                     onChange={(e) => {
                       const val = Number(e.target.value);
                       if (isNaN(val)) return;
@@ -115,8 +129,17 @@ export default function Page() {
                       else if (val > 5) setComplexity(5);
                       else setComplexity(val);
                     }}
+=======
+                    onChange={(e) => setComplexity(e.target.value)}
+                    onInvalid={(e) => e.target.setCustomValidity('Please enter a value between 1 and 5')}
+                    onInput={(e) => e.target.setCustomValidity('')}
+                    aria-describedby="complexity-help"
+>>>>>>> 7c91d85 (Integracion calculadora con landing page IA)
                     className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   />
+                  <div id="complexity-help" className="text-xs text-gray-400 mt-1">
+                    1 = Simple, 5 = Very Complex
+                  </div>
                 </div>
                 
                 <div>
@@ -134,6 +157,8 @@ export default function Page() {
                       else setTimeline(val);
                     }}
                     className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  />
+                </div>
                   />
                 </div>
               </div>
