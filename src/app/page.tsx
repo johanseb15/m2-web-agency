@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
 
-export default function Hero() {
-  const [projectType, setProjectType] = useState('');
-  const [complexity, setComplexity] = useState('3');
-  const [timeline, setTimeline] = useState('3');
+"use client";
+import { useState } from 'react';
+
+// Página principal con calculadora de proyectos
+export default function Page() {
+  const [projectType, setProjectType] = useState<string>('');
+  const [complexity, setComplexity] = useState<number>(3);
+  const [timeline, setTimeline] = useState<number>(3);
   const [showResult, setShowResult] = useState(false);
-  const [estimatedCost, setEstimatedCost] = useState(0);
+  const [estimatedCost, setEstimatedCost] = useState<number>(0);
 
   const calculateCost = () => {
     let baseCost = 0;
-    
-    // Base cost by project type
-    switch(projectType) {
+    switch (projectType) {
       case 'landing':
         baseCost = 800;
         break;
@@ -27,14 +28,13 @@ export default function Hero() {
       default:
         baseCost = 1000;
     }
-    
-    // Complexity multiplier
-    const complexityMultiplier = parseInt(complexity) / 3;
-    
-    // Timeline multiplier (shorter timeline = higher cost)
-    const timelineMultiplier = parseInt(timeline) === 1 ? 1.5 : 
-                              parseInt(timeline) === 2 ? 1.2 : 1;
-    
+    // Multiplicador de complejidad (1-5, base 3)
+    const complexityMultiplier = complexity / 3;
+    // Multiplicador de timeline (1-12, menos semanas = más caro)
+    let timelineMultiplier = 1;
+    if (timeline <= 2) timelineMultiplier = 1.5;
+    else if (timeline <= 4) timelineMultiplier = 1.2;
+    // Calcular total
     const total = Math.round(baseCost * (1 + complexityMultiplier) * timelineMultiplier);
     setEstimatedCost(total);
     setShowResult(true);
@@ -86,17 +86,17 @@ export default function Hero() {
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium mb-2">Project Type</label>
-                <select 
-                  value={projectType}
-                  onChange={(e) => setProjectType(e.target.value)}
-                  className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                >
-                  <option value="">Choose an option</option>
-                  <option value="landing">Landing Page</option>
-                  <option value="ecommerce">E-commerce</option>
-                  <option value="webapp">Web App</option>
-                  <option value="corporate">Corporate Site</option>
-                </select>
+                  <select
+                    value={projectType}
+                    onChange={(e) => setProjectType(e.target.value)}
+                    className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  >
+                    <option value="">Choose an option</option>
+                    <option value="landing">Landing Page</option>
+                    <option value="ecommerce">E-commerce</option>
+                    <option value="webapp">Web App</option>
+                    <option value="corporate">Corporate Site</option>
+                  </select>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -104,10 +104,10 @@ export default function Hero() {
                   <label className="block text-sm font-medium mb-2">Complexity (1-5)</label>
                   <input
                     type="number"
-                    min="1"
-                    max="5"
+                    min={1}
+                    max={5}
                     value={complexity}
-                    onChange={(e) => setComplexity(e.target.value)}
+                    onChange={(e) => setComplexity(Number(e.target.value))}
                     className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>
@@ -116,10 +116,10 @@ export default function Hero() {
                   <label className="block text-sm font-medium mb-2">Timeline (weeks)</label>
                   <input
                     type="number"
-                    min="1"
-                    max="12"
+                    min={1}
+                    max={12}
                     value={timeline}
-                    onChange={(e) => setTimeline(e.target.value)}
+                    onChange={(e) => setTimeline(Number(e.target.value))}
                     className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                   />
                 </div>
@@ -176,7 +176,7 @@ export default function Hero() {
               </p>
               
               <button className="bg-cyan-500 hover:bg-cyan-600 text-black font-semibold px-6 py-2 rounded-lg transition-all duration-300 transform hover:scale-105">
-                Adrilanda
+                Get online
               </button>
             </div>
           </div>

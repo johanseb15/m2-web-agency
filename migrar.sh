@@ -47,7 +47,17 @@ fi
 
 # --- ACTUALIZACIÓN DE IMPORTS ---
 echo -e "\n🔧 Actualizando imports relativos a alias '@/':"
-find src -type f \( -name "*.ts" -o -name "*.tsx" \) -exec sed -i 's|\.\./|@/|g' {} \;
+
+# Detect OS for portable sed -i usage
+if [[ "$(uname)" == "Darwin" ]]; then
+  # macOS (BSD sed)
+  find src -type f \( -name "*.ts" -o -name "*.tsx" \) \
+    -exec sed -E -i '' 's|^(\.\./)+|@/|' {} \;
+else
+  # Linux (GNU sed)
+  find src -type f \( -name "*.ts" -o -name "*.tsx" \) \
+    -exec sed -E -i 's|^(\.\./)+|@/|' {} \;
+fi
 echo "✅ Imports actualizados"
 
 echo -e "\n✅ Migración completa."

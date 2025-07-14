@@ -5,20 +5,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        neonGreen: '#00ffae',
-        neonPink: '#ff0099',
-        neonBlue: '#00d4ff',
-        darkBg: '#0a0a0a',
-        darkCard: '#131313',
+        darkBg: '#111111',
+        darkCard: '#1C1C1E',
         darkBorder: '#2a2a2a',
+        neonGreen: '#39FF14',
+        neonBlue: '#00d4ff',
+        neonPink: '#ff0099',
+        textPrimary: '#FFFFFF',
+        textMuted: '#EAEAEA',
       },
       fontFamily: {
-        display: ['var(--font-sans)'],
-        mono: ['var(--font-mono)'],
-        sans: ['var(--font-sans)'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      boxShadow: {
+        neonGreen: '0 0 12px #39FF14',
+        neonBlue: '0 0 12px #00d4ff',
+        neonPink: '0 0 12px #ff0099',
       },
       animation: {
-        'spin-slow': 'spin 8s linear infinite',
+        'pulse-slow': 'pulse 3s ease-in-out infinite',
+      },
+      keyframes: {
+        pulse: {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.6 },
+        },
       },
     },
   },

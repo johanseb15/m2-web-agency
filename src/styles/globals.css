@@ -1,0 +1,60 @@
+/* === Reset base === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === Tipografía global === */
+html {
+  font-family: 'Inter', sans-serif;
+  background-color: #111111;
+  color: #EAEAEA;
+  scroll-behavior: smooth;
+}
+
+/* === Scrollbar minimal === */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1C1C1E;
+}
+::-webkit-scrollbar-thumb {
+  background: #39FF14;
+  border-radius: 8px;
+}
+
+/* Firefox scrollbar styles */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #39FF14 #1C1C1E;
+}
+
+/* For browsers supporting the new scrollbar pseudo-elements */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #39FF14 #1C1C1E;
+}
+
+/* === Selección de texto === */
+::selection {
+  background: #39FF14;
+  color: #111111;
+}
+
+/* === Links === */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: #00d4ff;
+}
+
+/* === Body padding en mobile === */
+body {
+  min-height: 100vh;
+  padding-bottom: 2rem;
+}
