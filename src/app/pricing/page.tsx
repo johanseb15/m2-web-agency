@@ -1,5 +1,5 @@
 import Link from "next/link";
-import projectTypes from "../../data/projectTypes";
+import { projectTypes } from "../../data/projectTypes";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 export default function PricingPage() {
