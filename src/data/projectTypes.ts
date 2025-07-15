@@ -1,6 +1,4 @@
-// Define a ProjectType interface as an example
-export interface ProjectType {
-  id: number;
-  name: string;
-  description?: string;
-}
+export const projectTypes = [
+  { label: "Landing", value: "landing" },
+  { label: "Ecommerce", value: "ecommerce" },
+];
