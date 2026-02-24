@@ -6,9 +6,9 @@ export default function CalculatorPage() {
       <div className="mx-auto max-w-6xl">
         <h1 className="mb-3 text-4xl font-bold text-neonGreen">Calculadora de proyectos</h1>
         <p className="mb-10 text-gray-300">
-          Misma logica de estimacion, misma interfaz visual. Usa esta vista si quieres compartir el cotizador directo.
+          Vista dedicada para cotizar con flujo paso a paso y generar un resultado detallado.
         </p>
-        <EstimateCalculator />
+        <EstimateCalculator defaultMode="wizard" />
       </div>
     </main>
   );
