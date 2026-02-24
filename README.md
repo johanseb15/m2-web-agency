@@ -1,126 +1,144 @@
- Nuevo README.md
-# 💡 CalculadoraProyectos
+# M2 Web Agency + Calculadora
 
-> Estimador inteligente de costos para agencias digitales  
-> Producto MVP desarrollado por [M² Web Agency](https://m2.agency)
+Proyecto unificado en Next.js que integra:
+- Sitio web comercial de agencia
+- Calculadora de presupuestos web
+- Flujo paso a paso (wizard)
+- Resultados con desglose visual
+- Exportacion a PDF
 
-Una aplicación fullstack que permite calcular presupuestos de desarrollo web de forma conversacional, intuitiva y automatizada. Combina IA, diseño premium y funcionalidad exportable para mejorar la experiencia de cotización.
+Repositorio: `m2-web-agency`
 
-![React](https://img.shields.io/badge/React-18.x-blue?logo=react)
-![Next.js](https://img.shields.io/badge/Next.js-14-black?logo=next.js)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC?logo=tailwind-css)
-![Node.js](https://img.shields.io/badge/Node.js-18.x-green?logo=node.js)
-![MongoDB](https://img.shields.io/badge/MongoDB-6.x-green?logo=mongodb)
+## Stack
 
----
+- Next.js 15 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS
+- Chart.js + react-chartjs-2
+- html2pdf.js
 
-## 🎯 Características Principales
+## Estado actual
 
-- 🔢 **Cotización Conversacional**: Calculadora con flujo progresivo y lógica de negocio aplicada
-- 🎨 **UI Premium**: Estética dark + neón con Framer Motion
-- 📄 **Exportación PDF**: Cotizaciones con firma y branding personalizado
-- 📊 **Gráfico Donut**: Desglose visual por área técnica
-- 📬 **Captura de Leads**: Email + registro en base de datos
-- 💾 **Persistencia**: MongoDB con autenticación JWT
-- 📈 **Optimizado para Conversión**: CTA doble, testimonios, contador social
+Integracion completada de dos repositorios en una sola base:
+- Base principal: `m2-web-agency`
+- Logica funcional de calculadora consolidada desde `CalculadoraProyectos`
+- Eliminacion de duplicados y codigo roto
+- Build de produccion validado
 
----
+## Funcionalidades
 
-## 📁 Estructura del Proyecto
+- Home con CTA y calculadora embebida
+- Modo `Rapido` y modo `Paso a paso` en `/calculator`
+- Calculo de costos con:
+  - tipo de proyecto
+  - complejidad
+  - timeline
+  - paginas
+  - extras
+- Resultado detallado en `/results` (via query params)
+- Grafico donut de desglose (Base / Paginas / Extras)
+- Descarga de cotizacion en PDF
+- Paginas adicionales: `/pricing`, `/contact`, `/about`
+- Endpoint `POST /api/contact` para formulario de contacto
 
-
-CalculadoraProyectos/ ├── src/ │   ├── app/ │   │   ├── calculator/      # Flujo conversacional │   │   ├── results/         # Página de cotización final │   ├── components/          # UI: Hero, Form, ProgressBar, etc. │   ├── lib/                 # Lógica: calculatePrice, pdfGenerator │   ├── data/                # Contenido fijo ├── server/                  # Express + MongoDB │   ├── routes/              # Estimaciones, autenticación │   ├── models/              # Usuario, Cotización │   ├── controllers/         # Lógica de backend └── README.md
+## Reglas de estimacion
 
----
+La logica vive en:
+- `src/lib/calculateEstimate.ts`
 
-## 🚀 Instalación
+Modelo de calculo:
+1. Se toma costo base por tipo de proyecto
+2. Se suma costo por paginas extra
+3. Se suma costo de extras seleccionados
+4. Se aplica multiplicador por complejidad
+5. Se aplica multiplicador por timeline
+
+Formula:
+
+`total = (base + pages + extras) * complexityMultiplier * timelineMultiplier`
+
+## Estructura relevante
+
+```txt
+src/
+  app/
+    page.tsx
+    calculator/page.tsx
+    results/page.tsx
+    pricing/page.tsx
+    contact/page.tsx
+    about/page.tsx
+    api/contact/route.ts
+  components/
+    EstimateCalculator.tsx
+    EstimateBreakdownChart.tsx
+    ResultActions.tsx
+    ContactForm.tsx
+  data/
+    projectTypes.ts
+  lib/
+    calculateEstimate.ts
+    estimateParams.ts
+    pdfGenerator.ts
+  types/
+    html2pdf.d.ts
+```
+
+## Requisitos
+
+- Node.js 18+
+- npm 9+
+
+## Instalacion
 
 ```bash
-git clone https://github.com/johanseb15/CalculadoraProyectos.git
-cd CalculadoraProyectos
-
-
-Instalar frontend:
+git clone https://github.com/johanseb15/m2-web-agency.git
+cd m2-web-agency
 npm install
+```
 
+## Desarrollo
 
-Instalar backend:
-cd server
-npm install
+```bash
+npm run dev
+```
 
+Abrir en:
+- `http://localhost:3000`
 
-Variables de entorno:
-# Frontend
-NEXT_PUBLIC_API_URL=http://localhost:3001/api
+## Build de produccion
 
-# Backend
-MONGODB_URI=mongodb://localhost:27017/calculadora
-JWT_SECRET=tu_clave_secreta
+```bash
+npm run build
+npm run start
+```
 
+## Scripts
 
+- `npm run dev`: servidor de desarrollo
+- `npm run build`: compilacion de produccion + typecheck/lint
+- `npm run start`: ejecutar build en produccion
+- `npm run lint`: lint
 
-📦 Scripts
-Frontend:
-npm run dev         # Desarrollo
-npm run build       # Producción
+## Notas tecnicas
 
+- Se agrego `suppressHydrationWarning` en `<body>` para tolerar extensiones del navegador que inyectan atributos (ej. `cz-shortcut-listen`) y evitar warnings falsos de hidratacion.
+- Si aparece `EPERM` en `.next/trace`, cerrar el proceso `dev` antes de correr `npm run build`.
 
-Backend:
-npm run dev         # Nodemon
-npm run start       # Producción
+## Commits de integracion
 
+- `361a858` feat: unify agency site and project calculator in one Next.js app
+- `74ba941` feat: add step-by-step estimator flow, results chart, and PDF export
+- `7dfd45f` style: enhance unified UX with animated background and glass UI
 
+## Roadmap corto
 
-🧠 Flujo Conversacional
-- Usuario interactúa con preguntas tipo proyecto → complejidad → tiempo → integración
-- Cada paso usa tarjetas visuales + animaciones
-- Resultado incluye desglose técnico + gráfico donut
-- Se puede exportar PDF, agenda llamada o enviar email
-- Se registra lead si es necesario
+- Persistir estimaciones en DB
+- Envio de PDF por email
+- Dashboard de leads y cotizaciones
+- Tests E2E de flujo completo
 
-📄 Cálculo de Precio
-total = base × complejidad × tiempo + backendFee
+## Licencia
 
-
-Desglose:
-- UX/UI: 40%
-- Frontend: 35%
-- Backend: variable según integración
-- SEO: 10%
-
-✨ Visual y UX
-- Estética: Dark + Neón
-- Animaciones: Framer Motion (AnimatePresence, motion.div)
-- Accesibilidad: focus-visible, contrastes revisados
-
-📄 Exportación PDF
-- Branding M² Agency
-- Cotización + desglose
-- Firma digital y pie legal
-- Usando html2pdf.js
-
-📬 Lead & Email
-- Componente EmailInput.tsx permite ingresar correo
-- PDF se puede enviar por email y guardar en DB (opcional)
-
-🔮 Futuro SaaS
-- Generación automática de landing
-- Contratos legales basados en respuestas
-- Dashboard con historial, rentabilidad y analytics
-
-🧪 Testing
-npm run test             # Unit
-npm run test:coverage    # Cobertura
-
-
-
-🆘 Soporte
-- GitHub: johanseb15
-- Web: https://m2.agency
-- Email: contacto@m2.agency
-
-📄 Licencia
-MIT — ver LICENSE
-
-⭐ Si esta herramienta te sirve o inspira, considerá dejar una estrella en GitHub ✨
+MIT

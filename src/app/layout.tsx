@@ -6,7 +6,7 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata = {
   title: "M2 Web Agency",
-  description: "Cotizá y lanzá tu sitio con IA y diseño inteligente",
+  description: "Cotiza y lanza tu sitio con IA y diseno inteligente",
 };
 
 type Props = {
@@ -16,7 +16,9 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="es" className={geist.variable}>
-      <body className="bg-darkBg text-white font-sans scroll-smooth">{children}</body>
+      <body suppressHydrationWarning className="bg-darkBg text-white font-sans scroll-smooth">
+        {children}
+      </body>
     </html>
   );
 }
