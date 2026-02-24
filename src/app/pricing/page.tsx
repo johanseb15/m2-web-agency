@@ -1,76 +1,37 @@
 import Link from "next/link";
-import { projectTypes } from "../../data/projectTypes";
-import { formatCurrency } from "../../utils/formatCurrency";
+import { projectTypes } from "@/data/projectTypes";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 export default function PricingPage() {
   return (
-    <section className="min-h-screen bg-darkBg text-white px-6 py-12">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-neonGreen mb-6">Planes y Precios</h1>
-        <p className="text-gray-400 mb-12 text-lg">
-          Explorá nuestros paquetes diseñados para distintos objetivos digitales. Elegí el que se adapta a tu marca y avanzá al instante.
+    <section className="min-h-screen bg-darkBg px-6 py-12 text-white">
+      <div className="mx-auto max-w-6xl">
+        <h1 className="text-4xl font-bold text-neonGreen">Planes y precios</h1>
+        <p className="mt-3 max-w-3xl text-gray-300">
+          Base de precios unificada con la calculadora. Cada plan puede ampliarse con extras y ajustes de complejidad.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {Array.isArray(projectTypes) && projectTypes.length > 0 ? (
-            projectTypes.map((type) => (
-              <div
-                key={type.id}
-                className="bg-darkCard border border-darkBorder rounded-xl p-6 hover:border-neonBlue transition"
-              >
-                <h2 className="text-xl font-semibold text-neonBlue mb-2">{type.name}</h2>
-                <p className="text-gray-400 text-sm mb-4">{type.description}</p>
-                <div className="text-3xl font-bold text-neonGreen mb-4">
-                  {formatCurrency(type.baseCost)}
-                </div>
-                <ul className="text-sm space-y-2 mb-6" aria-label={`Características incluidas en el paquete ${type.name}`} role="list">
-                  {type.features.slice(0, 4).map((feature: string) => (
-                    <li key={feature} className="flex items-center gap-2" role="listitem">
-                      <span className="text-neonGreen" aria-hidden="true">✓</span>
-                      <span className="sr-only">Incluye</span>
-                      <span className="text-gray-300">{feature}</span>
-                    </li>
-                  ))}
-                  {type.features.length > 4 && (
-                    <li className="flex items-center gap-2 text-gray-400 italic" role="listitem">
-                      <span className="text-neonGreen" aria-hidden="true">…</span>
-                      <span className="sr-only">y más características</span>
-                      <span>and more...</span>
-                    </li>
-                  )}
-                </ul>
-                <Link
-                  href="/calculator"
-                  className="inline-block bg-neonGreen text-black text-sm font-bold px-4 py-2 rounded-md hover:scale-105 transition"
-                  aria-label={`Cotizar este paquete: ${type.name} - ir a la calculadora`}
-                  role="button"
-                >
-                  Cotizar este paquete – Ir a la calculadora
-                </Link>
-              </div>
-            ))
-          ) : (
-            <div className="col-span-full text-center text-gray-400 py-12">
-              No hay paquetes disponibles en este momento.
-            </div>
-          )}
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {projectTypes.map((type) => (
+            <article key={type.id} className="rounded-xl border border-darkBorder bg-darkCard p-6">
+              <h2 className="text-xl font-semibold text-neonBlue">{type.name}</h2>
+              <p className="mt-2 text-sm text-gray-300">{type.description}</p>
+              <p className="mt-4 text-3xl font-black text-neonGreen">{formatCurrency(type.baseCost, "es-AR", "USD")}</p>
+              <ul className="mt-4 space-y-2 text-sm text-gray-300">
+                {type.features.map((feature) => (
+                  <li key={feature}>- {feature}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <p className="text-gray-500">¿No estás seguro cuál elegir?</p>
-          <Link
-            href="/calculator"
-            className="text-neonBlue underline text-sm hover:text-neonGreen"
-          >
-            Usá nuestra calculadora inteligente
+        <div className="mt-10">
+          <Link href="/calculator" className="rounded-lg bg-neonGreen px-5 py-3 font-bold text-black">
+            Ir a la calculadora completa
           </Link>
         </div>
       </div>
     </section>
   );
 }
-
-/* 
-  The ProjectType interface and projectTypes array have been removed from this file.
-  They should be defined and exported in "@/data/projectTypes" only.
-*/

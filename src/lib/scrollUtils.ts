@@ -1,7 +1,6 @@
-import Lenis from "@studio-freight/lenis";
-
-const lenis = new Lenis({ duration: 1.2, smooth: true });
-
-export function scrollTo(target: string | number) {
-  lenis.scrollTo(target, { offset: -50 });
+export function scrollTo(selector: string) {
+  if (typeof window === "undefined") return;
+  const element = document.querySelector(selector);
+  if (!element) return;
+  element.scrollIntoView({ behavior: "smooth", block: "start" });
 }

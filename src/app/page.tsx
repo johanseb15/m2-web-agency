@@ -1,205 +1,51 @@
-"use client";
-import { useState } from 'react';
+import Link from "next/link";
+import EstimateCalculator from "@/components/EstimateCalculator";
 
-// Página principal con calculadora de proyectos
-export default function Page() {
-  const [projectType, setProjectType] = useState<string>('');
-  const [complexity, setComplexity] = useState<number>(3);
-  const [timeline, setTimeline] = useState<number>(3);
-  const [showResult, setShowResult] = useState(false);
-  const [estimatedCost, setEstimatedCost] = useState<number>(0);
-
-  const calculateCost = () => {
-    let baseCost = 0;
-    switch (projectType) {
-      case 'landing':
-        baseCost = 800;
-        break;
-      case 'ecommerce':
-        baseCost = 2500;
-        break;
-      case 'webapp':
-        baseCost = 4000;
-        break;
-      case 'corporate':
-        baseCost = 1500;
-        break;
-      default:
-        baseCost = 1000;
-    }
-
-    
-    // Complexity multiplier
-    // Use an explicit mapping for 0%, 25%, 50%, 75%, 100% complexity increases
-    const complexityMultipliers = { 1: 0, 2: 0.25, 3: 0.5, 4: 0.75, 5: 1.0 };
-    const complexityMultiplier = complexityMultipliers[parseInt(complexity)] || 0.5;
-    
-    // Timeline multiplier (shorter timeline = higher cost)
-    const timelineMultiplier = parseInt(timeline) === 1 ? 1.5 : 
-                              parseInt(timeline) === 2 ? 1.2 : 1;
-    
-  const total = Math.round(baseCost * (1 + complexityMultiplier) * timelineMultiplier);
-  setEstimatedCost(total);
-  setShowResult(true);
-};
-
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
-      {/* Header */}
-      <header className="flex justify-between items-center p-6 max-w-7xl mx-auto">
-        <div className="flex items-center gap-2">
-          <div className="text-3xl font-bold">
-            <span className="text-emerald-400">M</span>
-            <span className="text-xs align-super text-emerald-400">2</span>
-          </div>
-        </div>
-        
-        <nav className="flex gap-8 text-lg">
-          <a href="#calculator" className="hover:text-emerald-400 transition-colors">Calculator</a>
-          <a href="#generator" className="hover:text-emerald-400 transition-colors">Generator</a>
-          <a href="#automation" className="hover:text-emerald-400 transition-colors">Automation</a>
-        </nav>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-            Build your website with<br />
-            <span className="text-emerald-400">the power of AI.</span>
-          </h1>
-          
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-            Use our intuitive calculator to estimate web development costs
-            and instantly generate landing pages tailored to your needs.
-          </p>
-          
-          <button className="bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-8 py-3 rounded-lg transition-all duration-300 transform hover:scale-105">
-            Get started
-          </button>
-        </div>
-
-        {/* Bottom Section */}
-        <div className="grid md:grid-cols-2 gap-8 items-start">
-          {/* Project Calculator */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8">
-            <h2 className="text-2xl font-bold mb-6">Project Calculator</h2>
-            
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium mb-2">Project Type</label>
-                  <select
-                    value={projectType}
-                    onChange={(e) => setProjectType(e.target.value)}
-                    className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                  >
-                    <option value="">Choose an option</option>
-                    <option value="landing">Landing Page</option>
-                    <option value="ecommerce">E-commerce</option>
-                    <option value="webapp">Web App</option>
-                    <option value="corporate">Corporate Site</option>
-                  </select>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Complexity</label>
-                  <input
-                    type="number"
-                    min={1}
-                    max={5}
-                    value={complexity}
-                    onChange={(e) => {
-                      const val = Number(e.target.value);
-                      if (isNaN(val)) return;
-                      if (val < 1) setComplexity(1);
-                      else if (val > 5) setComplexity(5);
-                      else setComplexity(val);
-                    }}
-                    className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                  />
-                  <div id="complexity-help" className="text-xs text-gray-400 mt-1">
-                    1 = Simple, 5 = Very Complex
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium mb-2">Timeline (weeks)</label>
-                  <input
-                    type="number"
-                    min={1}
-                    max={12}
-                    value={timeline}
-                    onChange={(e) => {
-                      const val = Number(e.target.value);
-                      if (isNaN(val)) return;
-                      if (val < 1) setTimeline(1);
-                      else if (val > 12) setTimeline(12);
-                      else setTimeline(val);
-                    }}
-                    className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                  />
-                </div>
-              </div>
-
-              <button
-                onClick={calculateCost}
-                disabled={!projectType}
-                className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-slate-600 disabled:cursor-not-allowed text-black font-semibold py-3 rounded-lg transition-all duration-300"
+    <main className="min-h-screen bg-darkBg text-white">
+      <section className="mx-auto max-w-6xl px-6 pb-12 pt-20">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+          <div>
+            <p className="mb-4 inline-block rounded-full border border-neonBlue/40 bg-neonBlue/10 px-3 py-1 text-xs uppercase tracking-wider text-neonBlue">
+              M2 Web Agency + Calculadora
+            </p>
+            <h1 className="text-4xl font-black leading-tight md:text-6xl">
+              Sitio de agencia y cotizador en un solo proyecto.
+            </h1>
+            <p className="mt-4 max-w-xl text-lg text-gray-300">
+              Unificamos la web comercial y la calculadora de presupuestos para cotizar rapido, con un estilo visual consistente.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="#calculator"
+                className="rounded-lg bg-neonGreen px-5 py-3 font-bold text-black transition hover:opacity-90"
               >
-                Calculate
-              </button>
-
-              {showResult && (
-                <div className="mt-6 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-emerald-400 mb-2">
-                      ${estimatedCost.toLocaleString()}
-                    </div>
-                    <div className="text-sm text-gray-300">
-                      Estimated project cost
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold mb-2">Estimate costs</h3>
-              <p className="text-gray-300 mb-4">
-                Quickly calculate<br />
-                your project expenses
-              </p>
+                Cotizar ahora
+              </a>
+              <Link
+                href="/pricing"
+                className="rounded-lg border border-darkBorder px-5 py-3 font-semibold text-white transition hover:border-neonBlue"
+              >
+                Ver planes
+              </Link>
             </div>
           </div>
-
-          {/* Ready to bring your ideas to life */}
-          <div className="space-y-8">
-            <div>
-              <h2 className="text-4xl font-bold mb-2">
-                Ready to bring<br />
-                your ideas to life?
-              </h2>
-            </div>
-
-            <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold mb-4">
-                Launch your<br />
-                online presence
-              </h3>
-              
-              <p className="text-gray-300 mb-6 text-sm leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
-              </p>
-              
-              <button className="bg-cyan-500 hover:bg-cyan-600 text-black font-semibold px-6 py-2 rounded-lg transition-all duration-300 transform hover:scale-105">
-                Get online
-              </button>
-            </div>
+          <div className="rounded-2xl border border-darkBorder bg-darkCard p-6">
+            <h2 className="text-2xl font-semibold text-neonBlue">Que incluye esta integracion</h2>
+            <ul className="mt-4 space-y-3 text-gray-300">
+              <li>Una sola base de codigo con Next.js</li>
+              <li>Una sola configuracion de precios y reglas</li>
+              <li>Calculadora funcional embebida en la home</li>
+              <li>Rutas de soporte: precios, contacto y calculadora</li>
+            </ul>
           </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-20">
+        <EstimateCalculator />
+      </section>
+    </main>
   );
 }

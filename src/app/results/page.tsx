@@ -1,121 +1,44 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { calculatePrice } from "@/lib/calculatePrice";
-import { generateQuotePDF } from "@/lib/pdfGenerator";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import EmailInput from "@/components/EmailInput";
-import dynamic from "next/dynamic";
-
-const Chart = dynamic(() => import("react-chartjs-2").then((mod) => mod.Doughnut), {
-  ssr: false,
-});
+import Link from "next/link";
+import { calculateEstimate } from "@/lib/calculateEstimate";
 
 export default function ResultsPage() {
-  const [total, setTotal] = useState(0);
-  const [priceDetails, setPriceDetails] = useState(null);
-
-  useEffect(() => {
-    const responses = {
-      0: "app",
-      1: "high",
-      2: "1w",
-      3: "yes",
-    };
-    const { total, breakdown } = calculatePrice(responses);
-    setPriceDetails(breakdown);
-
-    let count = 0;
-    const interval = setInterval(() => {
-      count += Math.ceil(total / 30);
-      if (count >= total) {
-        clearInterval(interval);
-        setTotal(total);
-      } else {
-        setTotal(count);
-      }
-    }, 40);
-  }, []);
+  const demo = calculateEstimate({
+    projectType: "corporate",
+    complexity: "medium",
+    timeline: "standard",
+    pages: 6,
+    selectedFeatures: ["seo", "automation"],
+  });
 
   return (
-    <main className="min-h-screen bg-darkBg text-white px-4 py-20">
-      <section className="max-w-2xl mx-auto text-center space-y-10">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl font-bold text-neonGreen"
-        >
-          ¡Cotización generada!
-        </motion.h1>
+    <main className="min-h-screen bg-darkBg px-6 py-16 text-white">
+      <section className="mx-auto max-w-3xl rounded-xl border border-darkBorder bg-darkCard p-8">
+        <h1 className="text-4xl font-bold text-neonGreen">Resultado estimado</h1>
+        <p className="mt-3 text-gray-300">
+          Ejemplo de salida de la calculadora unificada. Puedes personalizarlo desde la ruta /calculator.
+        </p>
 
-        <motion.p
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="text-5xl font-bold text-neonGreen"
-        >
-          ${total}
-        </motion.p>
-
-        <p className="text-gray-400">Estimación basada en tu selección de proyecto y servicios</p>
-
-        {/* Gráfico Donut */}
-        {priceDetails && (
-          <Chart
-            data={{
-              labels: ["UX/UI", "Frontend", "Backend", "SEO"],
-              datasets: [
-                {
-                  data: Object.values(priceDetails),
-                  backgroundColor: ["#39FF14", "#00d4ff", "#ff00c8", "#888"],
-                  borderWidth: 0,
-                },
-              ],
-            }}
-            options={{
-              plugins: {
-                legend: {
-                  labels: { color: "#eaeaea" },
-                },
-              },
-            }}
-          />
-        )}
-
-        {/* CTA doble */}
-        <div className="flex flex-col sm:flex-row justify-center gap-4 mt-10">
-          <a
-            href="/contact"
-            className="bg-neonGreen text-black font-bold px-6 py-3 rounded-lg hover:scale-105 transition"
-          >
-            Agenda una llamada
-          </a>
-          <button
-            onClick={() =>
-              priceDetails &&
-              generateQuotePDF({
-                total,
-                breakdown: priceDetails,
-              })
-            }
-            className="border border-neonGreen text-neonGreen font-medium px-6 py-3 rounded-lg hover:bg-neonGreen hover:text-black transition"
-          >
-            Recibir PDF por email
-          </button>
+        <div className="mt-8 space-y-3 text-sm text-gray-300">
+          <div className="flex justify-between"><span>Base</span><span>USD {demo.breakdown.base.toLocaleString()}</span></div>
+          <div className="flex justify-between"><span>Paginas extra</span><span>USD {demo.breakdown.pages.toLocaleString()}</span></div>
+          <div className="flex justify-between"><span>Extras</span><span>USD {demo.breakdown.features.toLocaleString()}</span></div>
+          <div className="flex justify-between"><span>Complejidad</span><span>x{demo.breakdown.complexityMultiplier}</span></div>
+          <div className="flex justify-between"><span>Timeline</span><span>x{demo.breakdown.timelineMultiplier}</span></div>
         </div>
 
-        {/* Mini lead form */}
-        <EmailInput />
+        <div className="mt-8 rounded-lg bg-neonGreen/10 p-5 text-center">
+          <p className="text-sm text-gray-300">Total estimado</p>
+          <p className="text-5xl font-black text-neonGreen">USD {demo.total.toLocaleString()}</p>
+        </div>
 
-        {/* Contador social */}
-        <p className="text-gray-500 mt-6">+1400 cotizaciones generadas este mes 🚀</p>
-      </section>
-
-      {/* Testimonios */}
-      <section className="mt-20">
-        <TestimonialsSection />
+        <div className="mt-8 flex gap-3">
+          <Link href="/calculator" className="rounded-lg bg-neonGreen px-5 py-3 font-bold text-black">
+            Recalcular
+          </Link>
+          <Link href="/contact" className="rounded-lg border border-darkBorder px-5 py-3 font-semibold text-white">
+            Contactar
+          </Link>
+        </div>
       </section>
     </main>
   );
