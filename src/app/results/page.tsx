@@ -16,8 +16,8 @@ export default async function ResultsPage({ searchParams }: Props) {
     projectTypes.find((item) => item.id === input.projectType)?.name ?? "Proyecto personalizado";
 
   return (
-    <main className="min-h-screen bg-darkBg px-6 py-16 text-white">
-      <section className="mx-auto max-w-4xl rounded-xl border border-darkBorder bg-darkCard p-8">
+    <main className="aurora-bg min-h-screen bg-darkBg px-6 py-16 text-white">
+      <section className="glass-panel mx-auto max-w-4xl rounded-xl p-8">
         <h1 className="text-4xl font-bold text-neonGreen">Resultado estimado</h1>
         <p className="mt-3 text-gray-300">Proyecto: {projectName}</p>
 
@@ -33,7 +33,7 @@ export default async function ResultsPage({ searchParams }: Props) {
               <p className="text-5xl font-black text-neonGreen">USD {result.total.toLocaleString()}</p>
             </div>
           </div>
-          <div className="rounded-lg border border-darkBorder bg-darkBg p-4">
+          <div className="rounded-lg border border-darkBorder bg-darkBg/80 p-4">
             <EstimateBreakdownChart
               base={result.breakdown.base}
               pages={result.breakdown.pages}

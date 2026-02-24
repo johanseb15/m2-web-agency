@@ -42,7 +42,7 @@ export default function EstimateCalculator({ defaultMode = "quick" }: Props) {
   };
 
   return (
-    <section id="calculator" className="rounded-2xl border border-darkBorder bg-darkCard p-6 md:p-8">
+    <section id="calculator" className="glass-panel rounded-2xl p-6 md:p-8">
       <div className="mb-4 flex gap-2">
         <button
           type="button"
@@ -83,7 +83,7 @@ export default function EstimateCalculator({ defaultMode = "quick" }: Props) {
               <select
                 value={projectType}
                 onChange={(e) => setProjectType(e.target.value)}
-                className="mt-2 w-full rounded-lg border border-darkBorder bg-darkBg px-3 py-2"
+                className="mt-2 w-full rounded-lg border border-darkBorder bg-darkBg/80 px-3 py-2 transition focus:border-neonBlue focus:outline-none"
               >
                 {projectTypes.map((item) => (
                   <option key={item.id} value={item.id}>
@@ -101,7 +101,7 @@ export default function EstimateCalculator({ defaultMode = "quick" }: Props) {
                 <select
                   value={complexity}
                   onChange={(e) => setComplexity(e.target.value as ComplexityId)}
-                  className="mt-2 w-full rounded-lg border border-darkBorder bg-darkBg px-3 py-2"
+                  className="mt-2 w-full rounded-lg border border-darkBorder bg-darkBg/80 px-3 py-2 transition focus:border-neonBlue focus:outline-none"
                 >
                   {Object.entries(complexityConfig).map(([id, item]) => (
                     <option key={id} value={id}>
@@ -115,7 +115,7 @@ export default function EstimateCalculator({ defaultMode = "quick" }: Props) {
                 <select
                   value={timeline}
                   onChange={(e) => setTimeline(e.target.value as TimelineId)}
-                  className="mt-2 w-full rounded-lg border border-darkBorder bg-darkBg px-3 py-2"
+                  className="mt-2 w-full rounded-lg border border-darkBorder bg-darkBg/80 px-3 py-2 transition focus:border-neonBlue focus:outline-none"
                 >
                   {Object.entries(timelineConfig).map(([id, item]) => (
                     <option key={id} value={id}>
@@ -136,7 +136,7 @@ export default function EstimateCalculator({ defaultMode = "quick" }: Props) {
                 max={30}
                 value={pages}
                 onChange={(e) => setPages(Math.max(1, Number(e.target.value) || 1))}
-                className="mt-2 w-full rounded-lg border border-darkBorder bg-darkBg px-3 py-2"
+                className="mt-2 w-full rounded-lg border border-darkBorder bg-darkBg/80 px-3 py-2 transition focus:border-neonBlue focus:outline-none"
               />
             </label>
           )}
@@ -198,7 +198,7 @@ export default function EstimateCalculator({ defaultMode = "quick" }: Props) {
             <p className="text-sm text-gray-300">Costo estimado</p>
             <p className="text-4xl font-black text-neonGreen">USD {result.total.toLocaleString()}</p>
           </div>
-          <Link href={href} className="mt-6 block rounded-lg bg-neonGreen px-5 py-3 text-center font-bold text-black">
+          <Link href={href} className="mt-6 block rounded-lg bg-neonGreen px-5 py-3 text-center font-bold text-black transition hover:scale-[1.02]">
             Ver resultado detallado
           </Link>
         </aside>

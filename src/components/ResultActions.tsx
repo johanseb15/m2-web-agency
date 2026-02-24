@@ -14,14 +14,14 @@ export default function ResultActions({ result, projectName }: Props) {
       <button
         type="button"
         onClick={() => downloadEstimatePDF({ result, projectName })}
-        className="rounded-lg bg-neonGreen px-5 py-3 font-bold text-black"
+        className="rounded-lg bg-neonGreen px-5 py-3 font-bold text-black transition hover:scale-[1.02]"
       >
         Descargar PDF
       </button>
-      <a href="/calculator" className="rounded-lg border border-darkBorder px-5 py-3 font-semibold text-white">
+      <a href="/calculator" className="rounded-lg border border-darkBorder px-5 py-3 font-semibold text-white transition hover:border-neonBlue">
         Recalcular
       </a>
-      <a href="/contact" className="rounded-lg border border-darkBorder px-5 py-3 font-semibold text-white">
+      <a href="/contact" className="rounded-lg border border-darkBorder px-5 py-3 font-semibold text-white transition hover:border-neonBlue">
         Contactar
       </a>
     </div>
