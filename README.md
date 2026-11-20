@@ -1,3 +1,22 @@
+> **Ficha de proyecto — Vyntrava | 2026-11-20**
+> Estado documental: revisión de repositorio; no implica despliegue ni auditoría de producción.
+
+## Resumen y propósito
+
+**Aplicación web comercial y estimador de presupuestos.** Sitio de agencia construido con Next.js/TypeScript que reúne páginas comerciales, un estimador por tipo de proyecto, complejidad, plazo y extras, desglose visual y exportación PDF.
+
+## Estado y límites
+
+Código disponible; los importes configurados son reglas de ejemplo y no una cotización comercial vinculante. No hay validación reciente del despliegue en esta auditoría.
+
+## Ubicación en el portfolio
+
+Candidato a reutilizar únicamente la lógica de estimación en Vyntrava Web, previo control de procedencia, pruebas y precios.
+
+**Código:** [m2-web-agency](https://github.com/johanseb15/m2-web-agency) · **Documentación técnica original:** continúa a continuación y puede reflejar un estado histórico.
+
+---
+
 # M2 Web Agency + Calculadora
 
 Proyecto unificado en Next.js que integra:
